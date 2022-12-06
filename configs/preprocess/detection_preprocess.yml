@@ -1,2 +1,20 @@
-PreprocessOps:
-  alo: 123
+PreProcess:
+  - DetResizeForTest:
+    limit_side_len:
+    limit_type:
+  - NormalizeImage:
+    std:
+      - 0.229
+      - 0.224
+      - 0.225
+    mean:
+      - 0.485
+      - 0.456
+      - 0.406
+    scale: 1./255.
+    order: hwc
+  - ToCHWImage: None
+  - KeepKeys:
+      keep_keys:
+        - image
+        - shape

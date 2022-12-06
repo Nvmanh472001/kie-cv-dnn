@@ -1,0 +1,5 @@
+PostProcess:
+  name: 'CTCLabelDecode',
+  character_type: en
+  character_dict_path:
+  use_space_char: True
