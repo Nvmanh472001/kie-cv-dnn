@@ -1,5 +1,4 @@
-PostProcess:
-  name: 'CTCLabelDecode',
-  character_type: en
-  character_dict_path:
-  use_space_char: True
+name: CTCLabelDecode
+character_type: en
+character_dict_path: doc/character_dict/en_dict.txt
+use_space_char: True

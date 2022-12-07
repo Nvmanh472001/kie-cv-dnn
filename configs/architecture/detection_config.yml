@@ -14,4 +14,3 @@ Architecture:
   Head:
     name: DBHead
     k: 50
-

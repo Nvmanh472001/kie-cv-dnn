@@ -6,7 +6,7 @@ import torch.nn.functional as F
 class CTCHead(nn.Module):
     def __init__(self,
                  in_channels,
-                 out_channels=6625,
+                 out_channels=192,
                  fc_decay=0.0004,
                  mid_channels=None,
                  return_feats=False,

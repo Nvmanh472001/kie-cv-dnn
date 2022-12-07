@@ -1,0 +1,21 @@
+import streamlit as st
+from PIL import Image
+from numpy import asarray
+from pipeline import pipeline_handle
+
+def main():
+    st.set_page_config(layout="wide")
+    st.markdown("<h1 style='text-align: center; color: white;'>Trích xuất CV</h1>",
+                unsafe_allow_html=True)
+
+    image_file = st.file_uploader('CONVERT TO DIGITAL IMAGE', type=[
+                                  'jpeg', 'jpg', 'jpe', 'png', 'bmp'], key=1)
+    if image_file is not None:
+        img = Image.open(image_file)
+        numpydata = asarray(img)
+        print(numpydata)
+        print(type(numpydata))
+
+
+if __name__ == "__main__":
+    main()

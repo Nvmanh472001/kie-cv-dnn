@@ -7,6 +7,9 @@ import cv2
 
 from PIL import Image, ImageDraw, ImageFont
 import imghdr
+import datasets
+import random
+import argparse
 
 
 def get_image_file_list(img_file):
@@ -24,8 +27,7 @@ def get_image_file_list(img_file):
                 imgs_lists.append(file_path)
     if len(imgs_lists) == 0:
         raise Exception("not found any img file in {}".format(img_file))
-    return  imgs_lists
-
+    return imgs_lists
 
 
 def get_config_from_yaml(yaml_path):
@@ -89,10 +91,10 @@ def draw_ocr_box_txt(image,
                 box[2][1], box[3][0], box[3][1]
             ],
             outline=color)
-        box_height = math.sqrt((box[0][0] - box[3][0])**2 + (box[0][1] - box[3][
-            1])**2)
-        box_width = math.sqrt((box[0][0] - box[1][0])**2 + (box[0][1] - box[1][
-            1])**2)
+        box_height = math.sqrt((box[0][0] - box[3][0]) ** 2 + (box[0][1] - box[3][
+            1]) ** 2)
+        box_width = math.sqrt((box[0][0] - box[1][0]) ** 2 + (box[0][1] - box[1][
+            1]) ** 2)
         if box_height > 2 * box_width:
             font_size = max(int(box_width * 0.9), 10)
             font = ImageFont.truetype(font_path, font_size, encoding="utf-8")
@@ -231,3 +233,41 @@ def draw_boxes(image, boxes, scores=None, drop_score=0.5):
         box = np.reshape(np.array(box), [-1, 1, 2]).astype(np.int64)
         image = cv2.polylines(np.array(image), [box], True, (255, 0, 0), 2)
     return image
+
+
+def str2bool(v):
+    return v.lower() in ("true", "t", "1")
+
+
+def get_labels_from_dataset():
+    dataset = datasets.load_dataset("nvm472001/cvdataset-layoutlmv3")
+
+    features = dataset["train"].features
+    label_list = features["ner_tags"].feature.names
+
+    id2label = {k: v for k, v in enumerate(label_list)}
+    label2id = {v: k for k, v in enumerate(label_list)}
+
+    return label_list, id2label, label2id
+
+
+def generate_label2color(label_list):
+    num_of_colors = len(label_list)
+    color = ["#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)])
+             for i in range(num_of_colors)]
+    label2color = {k: v for k, v in zip(label_list, color)}
+
+    return label2color
+
+
+def init_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--yaml_dir', type=str, default='configs/common.yml')
+
+    return parser
+
+
+def parser_args():
+    parser = init_args()
+    return parser.parse_args()
