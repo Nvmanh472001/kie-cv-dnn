@@ -10,12 +10,17 @@ def main():
 
     image_file = st.file_uploader('CONVERT TO DIGITAL IMAGE', type=[
                                   'jpeg', 'jpg', 'jpe', 'png', 'bmp'], key=1)
+    if 'image' not in st.session_state:
+        st.session_state.image = None
+
     if image_file is not None:
         img = Image.open(image_file)
         numpydata = asarray(img)
-        print(numpydata)
-        print(type(numpydata))
-
+        st.button("Extract Information", on_click=pipeline_handle, args=[numpydata, img])
+        if st.session_state.image is not None:
+            col1, col2, col3, col4, col5, col6 = st.columns(6)
+            with col2:
+                st.image(st.session_state.image, width=960)
 
 if __name__ == "__main__":
     main()

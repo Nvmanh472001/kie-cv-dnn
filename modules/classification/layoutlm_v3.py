@@ -92,7 +92,6 @@ class LayoutLMv3Cls:
         predictions = self.predict(encoding)
 
         true_predictions = [self.model.config.id2label[pred] for pred in predictions]
-        print(true_predictions)
         true_boxes = [self.unnormalize_box(box, width, height) for box in bboxes]
 
         img_res = self.draw_image(image, true_boxes, true_predictions)
