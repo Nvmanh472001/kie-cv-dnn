@@ -4,10 +4,6 @@ from modules.common import Activation
 import numpy as np
 
 def drop_path(x, drop_prob=0., training=False):
-    """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
-    the original name is misleading as 'Drop Connect' is a different form of dropout in a separate paper...
-    See discussion: https://github.com/tensorflow/tpu/issues/494#issuecomment-532968956 ...
-    """
     if drop_prob == 0. or not training:
         return x
     keep_prob = torch.as_tensor(1 - drop_prob)
@@ -48,9 +44,6 @@ class ConvBNLayer(nn.Module):
 
 
 class DropPath(nn.Module):
-    """Drop paths (Stochastic Depth) per sample  (when applied in main path of residual blocks).
-    """
-
     def __init__(self, drop_prob=None):
         super(DropPath, self).__init__()
         self.drop_prob = drop_prob

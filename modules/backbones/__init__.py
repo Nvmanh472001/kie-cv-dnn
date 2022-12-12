@@ -6,6 +6,7 @@ def build_backbone(config, model_type):
         from .detection.mobilenet_v3 import MobileNetV3
     elif model_type == 'rec':
         from .recognition.svtrnet import SVTRNet
+        from .recognition.mobilenet_exhance import MobileNetV1Enhance
 
     module_name = config.pop('name')
     module_class = eval(module_name)(**config)

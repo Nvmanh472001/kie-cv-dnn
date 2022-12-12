@@ -1,22 +1,22 @@
 Detection:
-  yaml_path:
-    Architecture: configs/architecture/detection_config.yml
-    Preprocess: configs/preprocess/detection_preprocess.yml
-    Postprocess: configs/postprocess/detection_postprocess.yml
-  weight_path: checkpoints/detection/detection.pth
+    yaml_path:
+        Architecture: configs/architecture/detection_config.yml
+        Preprocess: configs/preprocess/detection_preprocess.yml
+        Postprocess: configs/postprocess/detection_postprocess.yml
+    weight_path: checkpoints/detection/detection.pth
 
 Recognition:
-  yaml_path:
-    Architecture: configs/architecture/recognition_config.yml
-    Postprocess: configs/postprocess/recognition_postprocess.yml
-  weight_path: checkpoints/recognition/recognition.pth
-  image_shape: "3, 32, 320"
-  char_type: en
-  batch_num: 5
-  max_text_length: 1000
-  limited_max_width: 1280
-  limited_min_width: 16
+    yaml_path:
+        Architecture: configs/architecture/recognition_config.yml
+        Postprocess: configs/postprocess/recognition_postprocess.yml
+    weight_path: checkpoints/recognition/en_ptocr_v3_rec_infer.pth
+    image_shape: "3, 32, 320"
+    char_type: en
+    batch_num: 5
+    max_text_length: 1000
+    limited_max_width: 1280
+    limited_min_width: 16
 
 Global:
-  use_gpu: True
-  drop_score: 0.5
+    use_gpu: False
+    drop_score: 0.5
