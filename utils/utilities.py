@@ -239,18 +239,6 @@ def str2bool(v):
     return v.lower() in ("true", "t", "1")
 
 
-def get_labels_from_dataset():
-    dataset = datasets.load_dataset("nvm472001/cvdataset-layoutlmv3")
-
-    features = dataset["train"].features
-    label_list = features["ner_tags"].feature.names
-
-    id2label = {k: v for k, v in enumerate(label_list)}
-    label2id = {v: k for k, v in enumerate(label_list)}
-
-    return label_list, id2label, label2id
-
-
 def generate_label2color(label_list):
     num_of_colors = len(label_list)
     color = ["#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)])

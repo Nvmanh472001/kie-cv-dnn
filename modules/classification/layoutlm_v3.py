@@ -1,16 +1,32 @@
 from transformers import LayoutLMv3Processor, LayoutLMv3ForTokenClassification
-from utils.utilities import get_labels_from_dataset, generate_label2color
+from utils.utilities import generate_label2color
 from PIL import Image
+import pandas as pd
 
 class LayoutLMv3Cls:
-    def __init__(self, weights_path, **kwargs):
-        self.weights_path = weights_path
+    def __init__(self, args, **kwargs):
+        self.args = args
+        
+        self.config = args["Classification"]
+        self.weights_path = self.config["weight_path"]
+        self.label_list_path = self.config['label_list_path']
+        
+        self.labels_list, self.label2id, self.id2label = self.get_labels(self.label_list_path)
 
-        self.processor = LayoutLMv3Processor.from_pretrained(weights_path)
-        self.model = LayoutLMv3ForTokenClassification.from_pretrained(weights_path)
+        self.processor = LayoutLMv3Processor.from_pretrained(self.weights_path)
+        self.model = LayoutLMv3ForTokenClassification.from_pretrained(self.weights_path)
 
-        self.labels_list, self.id2label, self.label2id = get_labels_from_dataset()
 
+    
+    def get_labels(self, label_list_path):
+        df = pd.read_csv(label_list_path, header=None)
+        label_list = df[0].tolist()
+        
+        id2label = {k: v for k, v in enumerate(label_list)}
+        label2id = {v: k for k, v in enumerate(label_list)}
+        
+        return label_list, label2id, id2label
+    
     def encode(self, image, boxes, words):
         encoding = self.processor(images=image,
                                   text=words,

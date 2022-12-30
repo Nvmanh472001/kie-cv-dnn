@@ -14,9 +14,8 @@ def main():
         st.session_state.image = None
 
     if image_file is not None:
-        img = Image.open(image_file)
-        numpydata = asarray(img)
-        st.button("Extract Information", on_click=pipeline_handle, args=[numpydata, img])
+        img = asarray(Image.open(image_file))
+        st.button("Extract Information", on_click=pipeline_handle, args=[img])
         if st.session_state.image is not None:
             col1, col2, col3, col4, col5, col6 = st.columns(6)
             with col2:

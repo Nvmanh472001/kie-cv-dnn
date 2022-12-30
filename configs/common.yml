@@ -9,7 +9,7 @@ Recognition:
     yaml_path:
         Architecture: configs/architecture/recognition_config.yml
         Postprocess: configs/postprocess/recognition_postprocess.yml
-    weight_path: checkpoints/recognition/en_ptocr_v3_rec_infer.pth
+    weight_path: checkpoints/recognition/recognition.pth
     image_shape: "3, 32, 320"
     char_type: en
     batch_num: 5
@@ -17,6 +17,10 @@ Recognition:
     limited_max_width: 1280
     limited_min_width: 16
 
+Classification:
+    weight_path: checkpoints/classification
+    label_list_path: doc/classification_dict/class_list.txt
+
 Global:
-    use_gpu: False
+    use_gpu: True
     drop_score: 0.5
